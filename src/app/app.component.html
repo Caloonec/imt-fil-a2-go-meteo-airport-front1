@@ -244,17 +244,7 @@
 <div class="toolbar" role="banner">
   <img src="../assets/images/Transport-Airplane-Takeoff-icon.png" height="40" width="40"/>
   <span>Airport sensors panel</span>
-<!--  <mat-form-field>-->
-<!--    <mat-select placeholder="Pokemon" [formControl]="pokemonControl">-->
-<!--      <mat-option>&#45;&#45; None &#45;&#45;</mat-option>-->
-<!--      <mat-optgroup *ngFor="let group of pokemonGroups" [label]="group.name"-->
-<!--                    [disabled]="group.disabled">-->
-<!--        <mat-option *ngFor="let pokemon of group.pokemon" [value]="pokemon.value">-->
-<!--          {{ pokemon.viewValue }}-->
-<!--        </mat-option>-->
-<!--      </mat-optgroup>-->
-<!--    </mat-select>-->
-<!--  </mat-form-field>-->
+
   <div class="spacer"></div>
   <mat-chip-list class="chips">
     <mat-chip >Vent</mat-chip>
@@ -262,6 +252,17 @@
     <mat-chip>Hygrométrie</mat-chip>
   </mat-chip-list>
   <button mat-flat-button (click)="getData()">test</button>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input (dateChange)="startDateChanged($event)" matStartDate placeholder="Start date">
+      <input (dateChange)="endDateChanged($event)" matEndDate placeholder="End date">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+  
 </div>
 
 
@@ -271,8 +272,7 @@
 
 <div class="content" role="main">
 
-<app-line-chart></app-line-chart>
-
+  <app-line-chart [values] = "values" [labels] = "labels"></app-line-chart>
 
 </div>
 

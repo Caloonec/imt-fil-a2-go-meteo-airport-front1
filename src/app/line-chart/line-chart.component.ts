@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 
@@ -10,16 +10,18 @@ import { Color, Label } from 'ng2-charts';
 })
 
 
-export class LineChartComponent implements OnInit {
+export class LineChartComponent implements OnChanges {
+  @Input() values!: number[];
+  @Input() labels!: string[];
 
   public lineChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [65, 100, 80, 81, 56, 55, 40], label: 'Series B' }
+    { data: this.values, 
+      label: 'Series A' }
   ];
-  public lineChartLabels: Label[] = ['', '', '', '', '', '', ''];
+  public lineChartLabels: Label[] = this.labels;
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
-    annotation: null
+    annotation: true
   };
   public lineChartColors: Color[] = [
     {
@@ -33,7 +35,12 @@ export class LineChartComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnChanges(){
+    this.refreshData();
   }
 
+  refreshData(){
+    this.lineChartData = [{data: this.values, label:"test"}];
+    this.lineChartLabels = this.labels
+  }
 }
