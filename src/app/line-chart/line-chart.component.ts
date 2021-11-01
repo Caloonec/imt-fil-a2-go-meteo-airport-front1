@@ -16,7 +16,7 @@ export class LineChartComponent implements OnInit {
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
     { data: [65, 100, 80, 81, 56, 55, 40], label: 'Series B' }
   ];
-  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartLabels: Label[] = ['', '', '', '', '', '', ''];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     annotation: null
