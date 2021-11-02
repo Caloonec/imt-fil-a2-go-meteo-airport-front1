@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MeasureList } from 'src/models/measureList';
+import { MeasureList } from 'src/models/MeasureList';
 import { DataService } from '../services/data.service';
 import * as _ from 'lodash';
 
@@ -10,19 +10,12 @@ import * as _ from 'lodash';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  listTemp = this.dataService.getMeasureList('Temp');
-  listWind = this.dataService.getMeasureList('Wind');
-  listPress = this.dataService.getMeasureList('Press');
 
-  constructor(
-    public dataService: DataService,
-    // public listTemp : MeasureList,
-    // public listWind : MeasureList,
-    // public listPress : MeasureList
-  ) {}
+  listTemp: MeasureList = [];
+  listWind: MeasureList = [];
+  listPress: MeasureList = [];
 
-  //TODO REMOVE THIS
-
+  constructor(public dataService: DataService) {}
 
   startDate = new Date();
   endDate = new Date();
@@ -31,20 +24,20 @@ export class AppComponent {
     this.getMeasures();
   }
 
-  getMeasures() : void {
+  getMeasures() {
     let stringFrom = this.startDate.toISOString();
     let stringTo = this.endDate.toISOString();
-    this.dataService.getMeasures('NTE','Temp', stringFrom, stringTo);
-    this.dataService.getMeasures('NTE','Press', stringFrom, stringTo);
-    this.dataService.getMeasures('NTE','Wind', stringFrom, stringTo);
 
-    //TODO REMOVE THIS
-    this.listTemp = _.clone(this.dataService.getMeasureList('Temp'));
-    this.listWind = _.clone(this.dataService.getMeasureList('Wind'));
-    this.listPress = _.clone(this.dataService.getMeasureList('Press'));
+    this.dataService.getMeasures('NTE', 'Temp', stringFrom, stringTo)
+      .then(measures => this.listTemp = measures);
+    this.dataService.getMeasures('NTE', 'Press', stringFrom, stringTo)
+      .then(measures => this.listWind = measures);
+    this.dataService.getMeasures('NTE', 'Wind', stringFrom, stringTo)
+      .then(measures => this.listPress = measures);
   }
 
-  getMeasureList(measureType: string) : MeasureList{
+  getMeasureList(measureType: string): MeasureList {
     return this.dataService.getMeasureList(measureType);
   }
+
 }

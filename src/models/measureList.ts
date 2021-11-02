@@ -1,9 +1,2 @@
-export class MeasureList {
-    constructor(
-        public values: number[],
-        public labels: string[], 
-        public mesureType: string,
-        public color: string,
-        public title: string
-    ) {}
-}
+export type MeasureList = Measure[];
+export type Measure = { x: Date, y: number };

@@ -1,50 +1,38 @@
 import { Injectable } from '@angular/core';
-import { MeasureList } from 'src/models/measureList';
+import { MeasureList } from 'src/models/MeasureList';
 import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  measureMap: Map<string, MeasureList> = new Map([
-    ['Temp', new MeasureList([], [], 'Temp', 'rgba(255,0,0,0.3)', 'Temperature')],
-    ['Wind',new MeasureList([], [], 'Wind', 'rgba(0,255,0,0.3)', 'Wind')],
-    ['Press', new MeasureList([], [], 'Press', 'rgba(0,0,255,0.3)', 'Pressure')]]
-  );
 
-  constructor(public apiService: ApiService) { }
+  measureMap = new Map<string, MeasureList>();
 
-  getMeasures(airport:string, measureType:string, from:string, to:string): void {
+  constructor(public apiService: ApiService) {}
 
-    this.apiService.getMeasures(airport, measureType, from, to).subscribe((data) => {
+  getMeasures(airport: string, measureType: string, from: string, to: string): Promise<MeasureList> {
+    return this.apiService.getMeasures(airport, measureType, from, to)
+      .toPromise()
+      .then(data => {
+        let parsedData: { timestamp: string, value: number }[] = JSON.parse(JSON.stringify(data));
+        let formattedData: MeasureList = parsedData.map(element => ({
+          x: new Date(element.timestamp),
+          y: element.value,
+        }));
 
-      this.measureMap.get(measureType)!.values = [];
-      this.measureMap.get(measureType)!.labels = [];
-
-      let set = new Set();
-      let dataObj = JSON.parse(JSON.stringify(data));
-
-      for (let index = 0; index < dataObj.length; index++) {
-        this.measureMap.get(measureType)!.values.push(dataObj[index].value);
-        let day = dataObj[index].timestamp.split('T')[0];
-        this.measureMap.get(measureType)!.labels.push(day);
+        this.measureMap.set(measureType, formattedData);
         
-        // if (!set.has(day)) {
-        //   this.measureMap.get(measureType)!.labels.push(day);
-        //   set.add(day);
-        // } else {
-        //   this.measureMap.get(measureType)!.labels.push('');
-        // }
-      }
-      
-    }, (error) => {
-      console.log("An error accessing apiService");
-      console.log(error)
-    })
-
+        return formattedData;
+      })
+      .catch((error) => {
+        console.log('An error accessing apiService', error);
+        throw error;
+      });
   }
 
   getMeasureList(measureType: string) : MeasureList{
-    return this.measureMap.get(measureType)!;
+    return this.measureMap.get(measureType) || [];
   }
-  }
+
+}
