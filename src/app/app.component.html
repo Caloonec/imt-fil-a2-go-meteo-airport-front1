@@ -212,12 +212,6 @@
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   }
 
-  footer {
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    line-height: 20px;
-  }
 
   /* Responsive Styles */
   @media screen and (max-width: 767px) {
@@ -267,3 +261,6 @@
   <app-line-chart [measures]="listWind" measureType="Wind" ></app-line-chart>
   <app-line-chart [measures]="listPress" measureType="Press" ></app-line-chart>
 </main>
+<footer class="navbar">
+  <mat-checkbox [(ngModel)]="checked">Checked</mat-checkbox>
+</footer>

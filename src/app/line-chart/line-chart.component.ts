@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { MeasureList } from 'src/models/MeasureList';
 
@@ -14,7 +14,7 @@ export class LineChartComponent implements OnChanges {
   @Input() measureType!: string;
   @Input() measures!: MeasureList;
 
-  public lineChartData: ChartDataset[] = [];
+  public lineChartData: ChartDataSets[] = [];
   public lineChartLabels: Label[] = [];
   public lineChartOptions: (ChartOptions & { annotation: any, xAxes: any } ) = {
     responsive: true,

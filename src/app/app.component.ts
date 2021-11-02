@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { MeasureList } from 'src/models/MeasureList';
+import { MeasureList } from 'src/models/MeasureList'
 import { DataService } from '../services/data.service';
-import * as _ from 'lodash';
-
 
 @Component({
   selector: 'app-root',
@@ -14,7 +12,7 @@ export class AppComponent {
   listTemp: MeasureList = [];
   listWind: MeasureList = [];
   listPress: MeasureList = [];
-
+  checked = false;
   constructor(public dataService: DataService) {}
 
   startDate = new Date();
