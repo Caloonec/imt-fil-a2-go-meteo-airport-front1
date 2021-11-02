@@ -1,2 +1,2 @@
 export type MeasureList = Measure[];
-export type Measure = { x: string /* Date */, y: number };
+export type Measure = { x: Date, y: number };
