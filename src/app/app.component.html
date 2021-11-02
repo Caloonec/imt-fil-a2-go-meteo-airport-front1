@@ -219,11 +219,6 @@
     line-height: 20px;
   }
 
-  footer a {
-    display: flex;
-    align-items: center;
-  }
-
   /* Responsive Styles */
   @media screen and (max-width: 767px) {
 
@@ -233,36 +228,36 @@
 
   }
 
-  .chips{
+  .chips {
     flex: auto;
   }
-
-
 </style>
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <img src="../assets/images/Transport-Airplane-Takeoff-icon.png" height="40" width="40"/>
+  <img src="../assets/images/Transport-Airplane-Takeoff-icon.png" height="40" width="40" />
   <span>Airport sensors panel</span>
 
   <div class="spacer"></div>
   <mat-chip-list class="chips">
-    <mat-chip >Vent</mat-chip>
+    <mat-chip>Vent</mat-chip>
     <mat-chip>Température</mat-chip>
     <mat-chip>Hygrométrie</mat-chip>
   </mat-chip-list>
-  <button mat-flat-button (click)="getData()">test</button>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-      <input (dateChange)="startDateChanged($event)" matStartDate placeholder="Start date">
-      <input (dateChange)="endDateChanged($event)" matEndDate placeholder="End date">
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
+  <mat-form-field>
+    <input (dateChange)="getData()" matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="From date & time" [(ngModel)]="startDate">
+    <mat-datepicker-toggle matSuffix [for]="$any(pickerFrom)"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #pickerFrom [enableMeridian]="true"></ngx-mat-datetime-picker>
   </mat-form-field>
-  
+
+  <mat-form-field>
+    <input (dateChange)="getData()" matInput [ngxMatDatetimePicker]="pickerTo" placeholder="To date & time" [(ngModel)]="endDate"
+      [min]="startDate">
+    <mat-datepicker-toggle matSuffix [for]="$any(pickerTo)"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #pickerTo [enableMeridian]="true"></ngx-mat-datetime-picker>
+  </mat-form-field>
+
 </div>
 
 
@@ -272,8 +267,8 @@
 
 <div class="content" role="main">
 
-  <app-line-chart [values] = "values" [labels] = "labels"></app-line-chart>
+  <app-line-chart [values]="values" [labels]="labels" [title]="temperatureTitle"></app-line-chart>
+  <app-line-chart [values]="values" [labels]="labels" [title]="windTitle"></app-line-chart>
+  <app-line-chart [values]="values" [labels]="labels" [title]="pressureTitle"></app-line-chart>
 
 </div>
-
-

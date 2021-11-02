@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApiService } from "./api.service";
@@ -11,23 +12,17 @@ import { ApiService } from "./api.service";
 export class AppComponent {
   constructor(private api: ApiService) { }
 
-  title = 'GoAirportFront';
   values: number[] = [];
   labels: string[] = [];
 
-  startDate: string = "";
-  endDate: string = "";
+  startDate = new Date();
+  endDate = new Date();
 
+  temperatureTitle = "Température"
+  windTitle = "Vent"
+  pressureTitle = "Pression"
 
-
-  startDateChanged(event: { value: Date; }){
-    const d: Date = event.value;
-    this.startDate = d.toISOString();
-  }
-
-  endDateChanged(event: { value: Date; }){
-    const d: Date = event.value;
-    this.endDate = d.toISOString();
+  endDateChanged(event: { value: Date; }) {
     this.getData();
   }
 
@@ -39,10 +34,7 @@ export class AppComponent {
     this.values = [];
     this.labels = [];
 
-
-    
-
-    this.api.getTestQuery(this.startDate, this.endDate).subscribe((data) => {
+    this.api.getTestQuery(this.startDate.toISOString(), this.endDate.toISOString()).subscribe((data) => {
 
       let set = new Set();
       let dataObj = JSON.parse(JSON.stringify(data));
@@ -50,10 +42,10 @@ export class AppComponent {
       for (let index = 0; index < dataObj.length; index++) {
         this.values.push(dataObj[index].value);
         let day = dataObj[index].timestamp.split('T')[0];
-        if(!set.has(day)){
+        if (!set.has(day)) {
           this.labels.push(day);
           set.add(day);
-        }else{
+        } else {
           this.labels.push('');
         }
       }

@@ -11,14 +11,12 @@ import { Color, Label } from 'ng2-charts';
 
 
 export class LineChartComponent implements OnChanges {
+  @Input() title!: string; 
   @Input() values!: number[];
   @Input() labels!: string[];
 
-  public lineChartData: ChartDataSets[] = [
-    { data: this.values, 
-      label: 'Series A' }
-  ];
-  public lineChartLabels: Label[] = this.labels;
+  public lineChartData: ChartDataSets[] = [];
+  public lineChartLabels: Label[] = [];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     annotation: true
@@ -40,7 +38,7 @@ export class LineChartComponent implements OnChanges {
   }
 
   refreshData(){
-    this.lineChartData = [{data: this.values, label:"test"}];
+    this.lineChartData = [{data: this.values, label: this.title}];
     this.lineChartLabels = this.labels
   }
 }
