@@ -8,7 +8,9 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';"@angular/forms";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
@@ -38,10 +40,11 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
+    MatToolbarModule,
+    MatIconModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
-
   ],
   providers: [],
   bootstrap: [AppComponent]

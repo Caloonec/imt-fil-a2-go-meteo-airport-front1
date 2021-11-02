@@ -16,10 +16,7 @@ export class DataService {
       .toPromise()
       .then(data => {
         let parsedData: { timestamp: string, value: number }[] = JSON.parse(JSON.stringify(data));
-        let formattedData: MeasureList = parsedData.map(element => ({
-          x: new Date(element.timestamp),
-          y: element.value,
-        }));
+        let formattedData: MeasureList = parsedData.map(element => ({ x: element.timestamp, y: element.value }));
 
         this.measureMap.set(measureType, formattedData);
         

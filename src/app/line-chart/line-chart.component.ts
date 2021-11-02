@@ -16,20 +16,27 @@ export class LineChartComponent implements OnChanges {
 
   public lineChartData: ChartDataSets[] = [];
   public lineChartLabels: Label[] = [];
-  public lineChartOptions: (ChartOptions & { annotation: any, xAxes: any } ) = {
+  public lineChartOptions: (ChartOptions & { annotation: any } ) = {
     responsive: true,
     annotation: true,
-    xAxes: [
-      {
-        type: 'time',
-        time: {
-          unit: 'day',
-          displayFormats: {
-            day: 'MMM D', // This is the default
+    scales: {
+      xAxes: [
+        {
+          type: 'time',
+          time: {
+            unit: 'minute',
+            displayFormats: {
+              minute: 'MMM D H:M:S', // This is the default
+            },
           },
         },
-      },
-    ],
+      ],
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    },
   };
   public lineChartColors: Color[] = [];
 
@@ -44,9 +51,18 @@ export class LineChartComponent implements OnChanges {
   }
 
   refreshData(){
-    this.lineChartData = [{ data: this.measures.map(m => m.y), label: this.title() }];;
-    this.lineChartLabels = this.measures.map(m => m.x).map(d => d.toISOString())
-    this.lineChartColors = [{ borderColor: 'black', backgroundColor: this.color() }];
+    this.lineChartData = [{
+      data: this.measures.map(m => m.y),
+      label: this.title(),
+      lineTension: 0.1,
+      borderWidth: 1.5,
+      // pointStyle: 'crossRot',
+    }];
+    this.lineChartLabels = this.measures.map(m => m.x);//.map(d => d.toISOString());
+    this.lineChartColors = [{
+      borderColor: this.color().replace('80', 'FF'),
+      backgroundColor: this.color(),
+    }];
     console.log(this.measures);
   }
 
@@ -58,16 +74,17 @@ export class LineChartComponent implements OnChanges {
     return LineChartComponent.measureTypeColor(this.measureType);
   }
 
+  // https://coolors.co/ef476f-ffd166-06d6a0-118ab2-073b4c
   static measureTypeColor(measureType: string): string {
     switch (measureType) {
       case 'Temp':
-        return 'rgba(255, 0, 0, 0.3)';
+        return '#ef476f80';
       case 'Wind':
-        return 'rgba(0, 255, 0, 0.3)';
+        return '#ffd16680';
       case 'Press':
-        return 'rgba(0, 0, 255, 0.3)';
+        return '#06d6a080';
       default:
-        return 'rgba(0, 0, 0, 0.3)';
+        return '#00000080';
     }
   }
 

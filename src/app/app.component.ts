@@ -29,11 +29,14 @@ export class AppComponent {
     let stringTo = this.endDate.toISOString();
 
     this.dataService.getMeasures('NTE', 'Temp', stringFrom, stringTo)
-      .then(measures => this.listTemp = measures);
+      .then(measures => this.listTemp = measures)
+      .catch(e => this.listTemp = []);
     this.dataService.getMeasures('NTE', 'Press', stringFrom, stringTo)
-      .then(measures => this.listWind = measures);
+      .then(measures => this.listWind = measures)
+      .catch(e => this.listWind = []);
     this.dataService.getMeasures('NTE', 'Wind', stringFrom, stringTo)
-      .then(measures => this.listPress = measures);
+      .then(measures => this.listPress = measures)
+      .catch(e => this.listPress = []);
   }
 
   getMeasureList(measureType: string): MeasureList {
