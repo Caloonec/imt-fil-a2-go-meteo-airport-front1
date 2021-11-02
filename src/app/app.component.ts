@@ -1,7 +1,7 @@
-import { Time } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ApiService } from "./api.service";
+import { MeasureList } from 'src/models/measureList';
+import { DataService } from '../services/data.service';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -10,52 +10,41 @@ import { ApiService } from "./api.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private api: ApiService) { }
+  listTemp = this.dataService.getMeasureList('Temp');
+  listWind = this.dataService.getMeasureList('Wind');
+  listPress = this.dataService.getMeasureList('Press');
 
-  values: number[] = [];
-  labels: string[] = [];
+  constructor(
+    public dataService: DataService,
+    // public listTemp : MeasureList,
+    // public listWind : MeasureList,
+    // public listPress : MeasureList
+  ) {}
+
+  //TODO REMOVE THIS
+
 
   startDate = new Date();
   endDate = new Date();
 
-  temperatureTitle = "Température"
-  windTitle = "Vent"
-  pressureTitle = "Pression"
-
-  endDateChanged(event: { value: Date; }) {
-    this.getData();
-  }
-
   ngOnInit() {
-    this.getData();
+    this.getMeasures();
   }
 
-  getData() {
-    this.values = [];
-    this.labels = [];
+  getMeasures() : void {
+    let stringFrom = this.startDate.toISOString();
+    let stringTo = this.endDate.toISOString();
+    this.dataService.getMeasures('NTE','Temp', stringFrom, stringTo);
+    this.dataService.getMeasures('NTE','Press', stringFrom, stringTo);
+    this.dataService.getMeasures('NTE','Wind', stringFrom, stringTo);
 
-    this.api.getTestQuery(this.startDate.toISOString(), this.endDate.toISOString()).subscribe((data) => {
-
-      let set = new Set();
-      let dataObj = JSON.parse(JSON.stringify(data));
-
-      for (let index = 0; index < dataObj.length; index++) {
-        this.values.push(dataObj[index].value);
-        let day = dataObj[index].timestamp.split('T')[0];
-        if (!set.has(day)) {
-          this.labels.push(day);
-          set.add(day);
-        } else {
-          this.labels.push('');
-        }
-      }
-
-
-    }, (error) => {
-      console.log("An error accessing apiService");
-      console.log(error)
-    })
-
+    //TODO REMOVE THIS
+    this.listTemp = _.clone(this.dataService.getMeasureList('Temp'));
+    this.listWind = _.clone(this.dataService.getMeasureList('Wind'));
+    this.listPress = _.clone(this.dataService.getMeasureList('Press'));
   }
 
+  getMeasureList(measureType: string) : MeasureList{
+    return this.dataService.getMeasureList(measureType);
+  }
 }

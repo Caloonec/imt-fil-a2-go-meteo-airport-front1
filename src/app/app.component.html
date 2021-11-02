@@ -246,13 +246,13 @@
   </mat-chip-list>
 
   <mat-form-field>
-    <input (dateChange)="getData()" matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="From date & time" [(ngModel)]="startDate">
+    <input (dateChange)="getMeasures()" matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="From date & time" [(ngModel)]="startDate">
     <mat-datepicker-toggle matSuffix [for]="$any(pickerFrom)"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #pickerFrom [enableMeridian]="true"></ngx-mat-datetime-picker>
   </mat-form-field>
 
   <mat-form-field>
-    <input (dateChange)="getData()" matInput [ngxMatDatetimePicker]="pickerTo" placeholder="To date & time" [(ngModel)]="endDate"
+    <input (dateChange)="getMeasures()" matInput [ngxMatDatetimePicker]="pickerTo" placeholder="To date & time" [(ngModel)]="endDate"
       [min]="startDate">
     <mat-datepicker-toggle matSuffix [for]="$any(pickerTo)"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #pickerTo [enableMeridian]="true"></ngx-mat-datetime-picker>
@@ -260,15 +260,10 @@
 
 </div>
 
-
-
-
 <div class="spacer"></div>
 
 <div class="content" role="main">
-
-  <app-line-chart [values]="values" [labels]="labels" [title]="temperatureTitle"></app-line-chart>
-  <app-line-chart [values]="values" [labels]="labels" [title]="windTitle"></app-line-chart>
-  <app-line-chart [values]="values" [labels]="labels" [title]="pressureTitle"></app-line-chart>
-
+  <app-line-chart [data]="listTemp" ></app-line-chart>
+  <app-line-chart [data]="listWind" ></app-line-chart>
+  <app-line-chart [data]="listPress"></app-line-chart>
 </div>
