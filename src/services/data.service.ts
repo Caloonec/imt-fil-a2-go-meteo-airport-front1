@@ -9,7 +9,7 @@ import { ApiService } from './api.service';
 export class DataService {
 
   measureMap = new Map<string, MeasureList>();
-  measureAverage: MeasureAverage = {temp: -1.0, wind: -1.0, pressure: -1.0}
+  measureAverage: MeasureAverage = {temp: -1.0, wind: -1.0, press: -1.0}
 
   constructor(public apiService: ApiService) {}
 

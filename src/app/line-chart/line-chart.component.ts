@@ -26,7 +26,7 @@ export class LineChartComponent implements OnChanges {
           time: {
             unit: 'minute',
             displayFormats: {
-              minute: 'MMM D H:M:S', // This is the default
+              minute: 'MMM D h:mm:s', // This is the default
             },
           },
         },

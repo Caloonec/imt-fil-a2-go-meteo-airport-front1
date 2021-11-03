@@ -1,1 +1,1 @@
-export type MeasureAverage = {temp: number, wind: number, pressure: number}
+export type MeasureAverage = {temp: number, wind: number, press: number}

@@ -13,7 +13,8 @@ export class AppComponent {
   listTemp: MeasureList = [];
   listWind: MeasureList = [];
   listPress: MeasureList = [];
-  listAverage : MeasureAverage = {temp: -1.0, wind: -1.0, pressure: -1.0};
+  listAverage : MeasureAverage = {temp: -1.0, wind: -1.0, press: -1.0};
+
   displayAvg: boolean = true;
   constructor(public dataService: DataService) {}
 
@@ -58,7 +59,7 @@ export class AppComponent {
     let stringDate = this.avgDate.toISOString().split('T')[0];
     this.dataService.getAverageMeasures(this.airport, stringDate)
       .then(averages => this.listAverage = averages)
-      .catch(e => this.listAverage = {temp: -1.0, wind: -1.0, pressure: -1.0});
+      .catch(e => this.listAverage = {temp: -1.0, wind: -1.0, press: -1.0});
   }
 
   getMeasureList(measureType: string): MeasureList {
