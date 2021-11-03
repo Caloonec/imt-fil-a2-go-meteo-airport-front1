@@ -12,13 +12,14 @@ export class AppComponent {
   listTemp: MeasureList = [];
   listWind: MeasureList = [];
   listPress: MeasureList = [];
-  checked = false;
+  displayAvg: boolean = false;
   constructor(public dataService: DataService) {}
 
   startDate = new Date();
   endDate = new Date();
 
   ngOnInit() {
+    this.displayAvg = false;
     this.getMeasures();
   }
 
@@ -39,9 +40,5 @@ export class AppComponent {
 
   getMeasureList(measureType: string): MeasureList {
     return this.dataService.getMeasureList(measureType);
-  }
-
-  displayAvg() {
-    return true;
   }
 }

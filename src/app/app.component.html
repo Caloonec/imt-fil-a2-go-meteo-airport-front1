@@ -24,16 +24,14 @@
     </mat-form-field>
   </div>
 
-  <div *ngIf="!displayAvg()" class="charts">
+  <div *ngIf="!displayAvg" class="charts">
     <app-line-chart [measures]="listTemp" measureType="Temp"></app-line-chart>
     <app-line-chart [measures]="listWind" measureType="Wind"></app-line-chart>
     <app-line-chart [measures]="listPress" measureType="Press"></app-line-chart>
   </div>
 
-  <div *ngIf="displayAvg()" class="barCharts">
-    <app-bar-chart [measures]="listTemp" measureType="Temp"></app-bar-chart>
-    <app-bar-chart [measures]="listWind" measureType="Wind"></app-bar-chart>
-    <app-bar-chart [measures]="listPress" measureType="Press"></app-bar-chart>
+  <div *ngIf="displayAvg" class="barCharts">
+    <!-- TODO -->
   </div>
 
 </main>
