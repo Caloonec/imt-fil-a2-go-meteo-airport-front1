@@ -14,7 +14,6 @@ export class AppComponent {
   listWind: MeasureList = [];
   listPress: MeasureList = [];
   listAverage : MeasureAverage = {temp: -1.0, wind: -1.0, pressure: -1.0};
-
   displayAvg: boolean = true;
   constructor(public dataService: DataService) {}
 
@@ -33,6 +32,11 @@ export class AppComponent {
     } else {
       this.getMeasures();
     }
+  }
+
+  updatePage(bool: boolean) {
+    this.displayAvg = bool;
+    this.refreshAll();
   }
 
   getMeasures() {

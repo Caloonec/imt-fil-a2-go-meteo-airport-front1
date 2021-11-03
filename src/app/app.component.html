@@ -5,9 +5,16 @@
   </button>
   <span>Airport sensors panel</span>
   <span class="example-spacer"></span>
+
+  <mat-button-toggle-group class="toggleGroup">
+    <mat-button-toggle value="all" (change)="updatePage(false)">All Datas</mat-button-toggle>
+    <mat-button-toggle value="avg" (change)="updatePage(true)">Average</mat-button-toggle>
+  </mat-button-toggle-group>
 </mat-toolbar>
 
 <main class="content" role="main">
+
+
   <mat-form-field class="searchbar">
     <input type="text" [(ngModel)]="airport" (change)="refreshAll()" matInput placeholder="Search">
   </mat-form-field>

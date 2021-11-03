@@ -15,6 +15,17 @@
   justify-content: center;
 }
 
+.toggleGroup {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 300px;
+  
+}
+
+.toggleGroup > mat-button-toggle {
+  text-align: center;
+}
+
 
 
 .date-pickers mat-form-field {
