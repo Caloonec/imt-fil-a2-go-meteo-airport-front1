@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MeasureAverage } from 'src/models/MeasureAverage';
 import { MeasureList } from 'src/models/MeasureList'
 import { DataService } from '../services/data.service';
 
@@ -12,8 +13,7 @@ export class AppComponent {
   listTemp: MeasureList = [];
   listWind: MeasureList = [];
   listPress: MeasureList = [];
-  listAverage: {} = {};
-  airport = '';
+  listAverage : MeasureAverage = {temp: -1.0, wind: -1.0, pressure: -1.0};
 
   displayAvg: boolean = true;
   constructor(public dataService: DataService) {}
@@ -21,15 +21,18 @@ export class AppComponent {
   startDate = new Date();
   endDate = new Date();
   avgDate = new Date();
+  airport = '';
 
-  ngOnInit() {
-    this.displayAvg = true;
-    this.refreshAll();
-  }
-
-  refreshAll(){
-    this.getMeasures();
-    this.getAverageMeasures();
+  refreshAll() {
+    if(this.airport.length != 3){
+      console.log('ça va pas')
+      return;
+    }
+    if (this.displayAvg) {
+      this.getAverageMeasures();
+    } else {
+      this.getMeasures();
+    }
   }
 
   getMeasures() {
@@ -51,7 +54,7 @@ export class AppComponent {
     let stringDate = this.avgDate.toISOString().split('T')[0];
     this.dataService.getAverageMeasures(this.airport, stringDate)
       .then(averages => this.listAverage = averages)
-      .catch(e => this.listAverage = []);
+      .catch(e => this.listAverage = {temp: -1.0, wind: -1.0, pressure: -1.0});
   }
 
   getMeasureList(measureType: string): MeasureList {

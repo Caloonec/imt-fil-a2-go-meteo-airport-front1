@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MeasureAverage } from 'src/models/MeasureAverage';
 import { MeasureList } from 'src/models/MeasureList';
 import { ApiService } from './api.service';
 
@@ -8,7 +9,7 @@ import { ApiService } from './api.service';
 export class DataService {
 
   measureMap = new Map<string, MeasureList>();
-  measureAverage = {}
+  measureAverage: MeasureAverage = {temp: -1.0, wind: -1.0, pressure: -1.0}
 
   constructor(public apiService: ApiService) {}
 
@@ -27,11 +28,12 @@ export class DataService {
       });
   }
 
-  getAverageMeasures(airport: string, date: string): Promise<{}> {
+  getAverageMeasures(airport: string, date: string) : Promise<MeasureAverage> {
     return this.apiService.getAverageMeasures(airport, date)
     .toPromise()
     .then(data => {
-      this.measureAverage = JSON.parse(JSON.stringify(data));
+      let parsedData: MeasureAverage = JSON.parse(JSON.stringify(data));
+      this.measureAverage = parsedData;
       return this.measureAverage;
     })
     .catch((error) => {
