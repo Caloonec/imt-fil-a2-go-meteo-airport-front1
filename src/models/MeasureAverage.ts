@@ -1,0 +1,1 @@
+export type MeasureAverage = {measureType:string, value:number}[]

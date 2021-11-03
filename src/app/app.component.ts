@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MeasureAverage } from 'src/models/MeasureAverage';
 import { MeasureList } from 'src/models/MeasureList'
 import { DataService } from '../services/data.service';
 
@@ -38,7 +39,15 @@ export class AppComponent {
       .catch(e => this.listPress = []);
   }
 
+  getAverageMeasures() {
+    // TODO
+  }
+
   getMeasureList(measureType: string): MeasureList {
     return this.dataService.getMeasureList(measureType);
+  }
+
+  getMeasureAverage(): MeasureAverage {
+    return this.dataService.getMeasureAverage();
   }
 }

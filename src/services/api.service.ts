@@ -20,9 +20,9 @@ export class ApiService {
     return this.http.get(url);
   }
 
-  getAverageMeasures(airport: string, day: string) {
-    // TODO
-    let url = '';
+  getAverageMeasures(airport: string, date: string) {
+    console.log('getAverageMeasures', date)
+    let url = apiUrl + airport + '/measures/average?date=' + date;
     return this.http.get(url)
   }
 
