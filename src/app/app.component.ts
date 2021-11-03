@@ -47,10 +47,10 @@ export class AppComponent {
     this.dataService.getMeasures(this.airport, 'Temp', stringFrom, stringTo)
       .then(measures => this.listTemp = measures)
       .catch(e => this.listTemp = []);
-    this.dataService.getMeasures(this.airport, 'Press', stringFrom, stringTo)
+    this.dataService.getMeasures(this.airport, 'Wind', stringFrom, stringTo)
       .then(measures => this.listWind = measures)
       .catch(e => this.listWind = []);
-    this.dataService.getMeasures(this.airport, 'Wind', stringFrom, stringTo)
+    this.dataService.getMeasures(this.airport, 'Press', stringFrom, stringTo)
       .then(measures => this.listPress = measures)
       .catch(e => this.listPress = []);
   }
