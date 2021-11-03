@@ -41,4 +41,7 @@ export class AppComponent {
     return this.dataService.getMeasureList(measureType);
   }
 
+  displayAvg() {
+    return true;
+  }
 }
