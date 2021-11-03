@@ -18,6 +18,7 @@ export class AppComponent {
 
   startDate = new Date();
   endDate = new Date();
+  avgDate = new Date();
 
   ngOnInit() {
     this.displayAvg = false;
@@ -40,7 +41,9 @@ export class AppComponent {
   }
 
   getAverageMeasures() {
-    // TODO
+    let stringDate = this.avgDate.toISOString();
+    this.dataService.getAverageMeasures('NTE', stringDate)
+      .then()
   }
 
   getMeasureList(measureType: string): MeasureList {

@@ -8,30 +8,43 @@
 </mat-toolbar>
 
 <main class="content" role="main">
-  <div class="date-pickers">
-    <mat-form-field>
-      <input matInput (dateChange)="getMeasures()" [ngxMatDatetimePicker]="pickerFrom" placeholder="From date & time"
-             [(ngModel)]="startDate">
-      <mat-datepicker-toggle matSuffix [for]="$any(pickerFrom)"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #pickerFrom [enableMeridian]="true"></ngx-mat-datetime-picker>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput (dateChange)="getMeasures()" [ngxMatDatetimePicker]="pickerTo" placeholder="To date & time"
-             [(ngModel)]="endDate"
-             [min]="startDate">
-      <mat-datepicker-toggle matSuffix [for]="$any(pickerTo)"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #pickerTo [enableMeridian]="true"></ngx-mat-datetime-picker>
-    </mat-form-field>
+  <div *ngIf="!displayAvg">
+    <div class="date-pickers">
+      <mat-form-field>
+        <input matInput (dateChange)="getMeasures()" [ngxMatDatetimePicker]="pickerFrom" placeholder="From date & time"
+               [(ngModel)]="startDate">
+        <mat-datepicker-toggle matSuffix [for]="$any(pickerFrom)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #pickerFrom [enableMeridian]="true"></ngx-mat-datetime-picker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput (dateChange)="getMeasures()" [ngxMatDatetimePicker]="pickerTo" placeholder="To date & time"
+               [(ngModel)]="endDate"
+               [min]="startDate">
+        <mat-datepicker-toggle matSuffix [for]="$any(pickerTo)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #pickerTo [enableMeridian]="true"></ngx-mat-datetime-picker>
+      </mat-form-field>
+    </div>
+
+    <div class="charts">
+      <app-line-chart [measures]="listTemp" measureType="Temp"></app-line-chart>
+      <app-line-chart [measures]="listWind" measureType="Wind"></app-line-chart>
+      <app-line-chart [measures]="listPress" measureType="Press"></app-line-chart>
+    </div>
   </div>
 
-  <div *ngIf="!displayAvg" class="charts">
-    <app-line-chart [measures]="listTemp" measureType="Temp"></app-line-chart>
-    <app-line-chart [measures]="listWind" measureType="Wind"></app-line-chart>
-    <app-line-chart [measures]="listPress" measureType="Press"></app-line-chart>
-  </div>
-
-  <div *ngIf="displayAvg" class="barCharts">
-    <!-- TODO -->
+  <div *ngIf="displayAvg">
+    <div class="date-pickers">
+      <mat-form-field>
+        <input matInput [(ngModel)]="avgDate" (dateChange)="getAVGvalues()" [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="flex-container">
+    <div>{{tempAVG}}</div>
+    <div>{{windAVG}}</div>
+    <div>{{pressAVG}}</div>
+    </div>
   </div>
 
 </main>
