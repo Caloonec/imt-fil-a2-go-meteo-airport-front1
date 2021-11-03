@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MeasureAverage } from 'src/models/MeasureAverage';
 import { MeasureList } from 'src/models/MeasureList';
 import { ApiService } from './api.service';
 
@@ -9,7 +8,7 @@ import { ApiService } from './api.service';
 export class DataService {
 
   measureMap = new Map<string, MeasureList>();
-  measureAverage : MeasureAverage = []
+  measureAverage = {}
 
   constructor(public apiService: ApiService) {}
 
@@ -19,9 +18,7 @@ export class DataService {
       .then(data => {
         let parsedData: { timestamp: string, value: number }[] = JSON.parse(JSON.stringify(data));
         let formattedData: MeasureList = parsedData.map(element => ({ x: element.timestamp, y: element.value }));
-
         this.measureMap.set(measureType, formattedData);
-        
         return formattedData;
       })
       .catch((error) => {
@@ -30,13 +27,11 @@ export class DataService {
       });
   }
 
-  getAverageMeasures(airport: string, date: string): Promise<MeasureAverage> {
+  getAverageMeasures(airport: string, date: string): Promise<{}> {
     return this.apiService.getAverageMeasures(airport, date)
     .toPromise()
     .then(data => {
-      let parsedData: { _id: string, average: number }[] = JSON.parse(JSON.stringify(data));
-      this.measureAverage = parsedData.map(element => ({ measureType: element._id, value: element.average }));
-      console.log(this.measureAverage);
+      this.measureAverage = JSON.parse(JSON.stringify(data));
       return this.measureAverage;
     })
     .catch((error) => {
@@ -49,7 +44,7 @@ export class DataService {
     return this.measureMap.get(measureType) || [];
   }
 
-  getMeasureAverage() : MeasureAverage{
+  getMeasureAverage() : {} {
     return this.measureAverage
   }
 

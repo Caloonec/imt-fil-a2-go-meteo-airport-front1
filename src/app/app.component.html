@@ -8,6 +8,10 @@
 </mat-toolbar>
 
 <main class="content" role="main">
+  <mat-form-field [(ngModel)]="airport" (change)="refreshAll()" class="searchbar">
+    <input type="text" matInput placeholder="Search">
+  </mat-form-field>
+
   <div *ngIf="!displayAvg">
     <div class="date-pickers">
       <mat-form-field>
@@ -35,15 +39,15 @@
   <div *ngIf="displayAvg">
     <div class="date-pickers">
       <mat-form-field>
-        <input matInput [(ngModel)]="avgDate" (dateChange)="getAVGvalues()" [matDatepicker]="picker" placeholder="Choose a date">
+        <input matInput [(ngModel)]="avgDate" (dateChange)="getAverageMeasures()" [matDatepicker]="picker" placeholder="Choose a date">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </div>
     <div class="flex-container">
-    <div>{{tempAVG}}</div>
-    <div>{{windAVG}}</div>
-    <div>{{pressAVG}}</div>
+    <div>{{ listAverage }}</div>
+    <div></div>
+    <div></div>
     </div>
   </div>
 

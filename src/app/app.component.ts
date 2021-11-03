@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MeasureAverage } from 'src/models/MeasureAverage';
 import { MeasureList } from 'src/models/MeasureList'
 import { DataService } from '../services/data.service';
 
@@ -13,7 +12,10 @@ export class AppComponent {
   listTemp: MeasureList = [];
   listWind: MeasureList = [];
   listPress: MeasureList = [];
-  displayAvg: boolean = false;
+  listAverage: {} = {};
+  airport = '';
+
+  displayAvg: boolean = true;
   constructor(public dataService: DataService) {}
 
   startDate = new Date();
@@ -21,36 +23,42 @@ export class AppComponent {
   avgDate = new Date();
 
   ngOnInit() {
-    this.displayAvg = false;
+    this.displayAvg = true;
+    this.refreshAll();
+  }
+
+  refreshAll(){
     this.getMeasures();
+    this.getAverageMeasures();
   }
 
   getMeasures() {
     let stringFrom = this.startDate.toISOString();
     let stringTo = this.endDate.toISOString();
 
-    this.dataService.getMeasures('NTE', 'Temp', stringFrom, stringTo)
+    this.dataService.getMeasures(this.airport, 'Temp', stringFrom, stringTo)
       .then(measures => this.listTemp = measures)
       .catch(e => this.listTemp = []);
-    this.dataService.getMeasures('NTE', 'Press', stringFrom, stringTo)
+    this.dataService.getMeasures(this.airport, 'Press', stringFrom, stringTo)
       .then(measures => this.listWind = measures)
       .catch(e => this.listWind = []);
-    this.dataService.getMeasures('NTE', 'Wind', stringFrom, stringTo)
+    this.dataService.getMeasures(this.airport, 'Wind', stringFrom, stringTo)
       .then(measures => this.listPress = measures)
       .catch(e => this.listPress = []);
   }
 
   getAverageMeasures() {
-    let stringDate = this.avgDate.toISOString();
-    this.dataService.getAverageMeasures('NTE', stringDate)
-      .then()
+    let stringDate = this.avgDate.toISOString().split('T')[0];
+    this.dataService.getAverageMeasures(this.airport, stringDate)
+      .then(averages => this.listAverage = averages)
+      .catch(e => this.listAverage = []);
   }
 
   getMeasureList(measureType: string): MeasureList {
     return this.dataService.getMeasureList(measureType);
   }
 
-  getMeasureAverage(): MeasureAverage {
+  getMeasureAverage(): {} {
     return this.dataService.getMeasureAverage();
   }
 }
