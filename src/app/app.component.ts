@@ -15,7 +15,7 @@ export class AppComponent {
   listPress: MeasureList = [];
   listAverage : MeasureAverage = {temp: -1.0, wind: -1.0, press: -1.0};
 
-  displayAvg: boolean = true;
+  displayAvg: boolean = false;
   constructor(public dataService: DataService) {}
 
   startDate = new Date();
